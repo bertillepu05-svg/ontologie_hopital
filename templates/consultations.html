@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Consultations{% endblock %}
+{% block breadcrumb %}Consultations{% endblock %}
+{% block content %}
+<section class="consult-hero">
+  <div class="consult-hero-icon" aria-hidden="true">▦</div>
+  <div class="consult-hero-copy">
+    <div class="eyebrow">SUIVI HOSPITALIER</div>
+    <h1>Consultations</h1>
+    <p>Consultez les consultations enregistrées dans l’ontologie de l’hôpital.</p>
+    <p class="hero-secondary">Chaque consultation relie un patient, un médecin et une date.</p>
+  </div>
+  <div class="hero-decoration" aria-hidden="true">＋</div>
+</section>
+
+<section class="consult-stats" aria-label="Résumé des consultations">
+  <article class="consult-stat">
+    <div class="consult-stat-icon stat-teal" aria-hidden="true">▦</div>
+    <div><strong>{{ consultations|length }}</strong><span>Consultation{% if consultations|length != 1 %}s{% endif %}</span><small>dans les résultats</small></div>
+  </article>
+  <article class="consult-stat">
+    <div class="consult-stat-icon stat-blue" aria-hidden="true">♙</div>
+    <div><strong>{{ patients_count }}</strong><span>Patients</span><small>concernés</small></div>
+  </article>
+  <article class="consult-stat">
+    <div class="consult-stat-icon stat-green" aria-hidden="true">♧</div>
+    <div><strong>{{ medecins_count }}</strong><span>Médecins</span><small>impliqués</small></div>
+  </article>
+  <aside class="ontology-tip">
+    <div class="tip-icon" aria-hidden="true">i</div>
+    <div><strong>Une lecture issue de l’ontologie</strong><p>Consultation → patient + médecin + date</p><small>Résultats extraits par SPARQL.</small></div>
+  </aside>
+</section>
+
+<section class="consult-table-panel">
+  <div class="consult-panel-heading">
+    <div>
+      <h2><span aria-hidden="true">▦</span> Liste des consultations</h2>
+      <p>Recherchez une consultation par patient, médecin, service, spécialité ou date.</p>
+    </div>
+    <span class="table-count">{{ consultations|length }} résultat{% if consultations|length != 1 %}s{% endif %}</span>
+  </div>
+
+  <form class="consult-filters" method="get" action="{{ url_for('consultations') }}">
+    <label class="filter-search">
+      <span class="sr-only">Rechercher une consultation</span>
+      <span class="filter-symbol" aria-hidden="true">⌕</span>
+      <input type="search" name="q" value="{{ q }}" placeholder="Patient, médecin, service, spécialité…" autocomplete="off">
+    </label>
+    <label class="filter-date">
+      <span class="sr-only">Filtrer par date</span>
+      <span class="filter-symbol" aria-hidden="true">▦</span>
+      <input type="date" name="date" value="{{ date_filter }}" aria-label="Filtrer par date">
+    </label>
+    <button class="button button-primary" type="submit">Filtrer <span aria-hidden="true">→</span></button>
+    {% if q or date_filter %}
+      <a class="button button-secondary" href="{{ url_for('consultations') }}">Réinitialiser</a>
+    {% endif %}
+  </form>
+
+  {% if consultations %}
+  <div class="table-scroll">
+    <table class="consult-table">
+      <thead>
+        <tr><th scope="col">DATE</th><th scope="col">PATIENT</th><th scope="col">MÉDECIN</th><th scope="col">SERVICE</th><th scope="col">SPÉCIALITÉ</th></tr>
+      </thead>
+      <tbody>
+      {% for c in consultations %}
+        <tr>
+          <td><span class="consult-date">{{ c.date }}</span><small class="cell-caption">Date enregistrée</small></td>
+          <td><div class="table-person"><span class="table-avatar patient-avatar" aria-hidden="true">{{ c.patient[:1]|upper }}</span><div><strong>{{ c.patient }}</strong><small>Patient</small></div></div></td>
+          <td><div class="table-person"><span class="table-avatar doctor-avatar" aria-hidden="true">＋</span><div><strong>Dr {{ c.medecin }}</strong><small>Médecin</small></div></div></td>
+          <td>{% if c.service %}<span class="data-chip service-chip">{{ c.service }}</span>{% else %}<span class="muted-dash">Non renseigné</span>{% endif %}</td>
+          <td>{% if c.specialite %}<span class="data-chip specialty-chip">{{ c.specialite }}</span>{% else %}<span class="muted-dash">Non renseignée</span>{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state consult-empty">
+    <div class="empty-icon" aria-hidden="true">⌕</div>
+    <h2>Aucune consultation trouvée</h2>
+    <p>Essaie un autre terme de recherche ou retire le filtre de date.</p>
+    <a href="{{ url_for('consultations') }}" class="button button-primary">Afficher toutes les consultations</a>
+  </div>
+  {% endif %}
+
+  <div class="consult-panel-footer">
+    <p><span aria-hidden="true">ⓘ</span> Données fictives de démonstration, issues de l’ontologie OWL.</p>
+    <span>{{ consultations|length }} consultation{% if consultations|length != 1 %}s{% endif %} affichée{% if consultations|length != 1 %}s{% endif %}</span>
+  </div>
+</section>
+{% endblock %}

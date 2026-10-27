@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Médecins{% endblock %}
+{% block breadcrumb %}Médecins{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <div class="eyebrow">ANNUAIRE HOSPITALIER</div>
+    <h1>Les médecins</h1>
+    <p class="page-subtitle">Explorez les médecins et leurs liens avec les services et spécialités de l’hôpital.</p>
+  </div>
+  <div class="heading-count"><strong>{{ medecins|length }}</strong><span>résultat{% if medecins|length != 1 %}s{% endif %}</span></div>
+</section>
+
+<section class="search-panel" aria-label="Recherche de médecins">
+  <div class="search-copy">
+    <span class="panel-icon" aria-hidden="true">⌕</span>
+    <div><h2>Rechercher dans l’ontologie</h2><p>Par nom, service ou spécialité.</p></div>
+  </div>
+  <form method="get" action="{{ url_for('accueil') }}" class="search-form">
+    <label class="sr-only" for="q">Nom, service ou spécialité</label>
+    <input id="q" type="search" name="q" value="{{ q }}" placeholder="Ex. : Kabila, Cardiologie…" autocomplete="off">
+    <button type="submit" class="button button-primary">Rechercher <span aria-hidden="true">→</span></button>
+    {% if q %}
+      <a href="{{ url_for('accueil') }}" class="button button-secondary">Réinitialiser</a>
+    {% endif %}
+  </form>
+</section>
+
+<div class="section-heading">
+  <div><h2>Répertoire des médecins</h2><p>Informations récupérées depuis le fichier de l’ontologie RDF.</p></div>
+  <span class="subtle-count">{{ medecins|length }} affiché{% if medecins|length != 1 %}s{% endif %}</span>
+</div>
+
+{% if medecins %}
+  <section class="doctor-grid" aria-label="Liste des médecins">
+    {% for m in medecins %}
+    <article class="doctor-card">
+      <div class="doctor-card-top">
+        <div class="avatar" aria-hidden="true">{{ m.nom[:1]|upper }}</div>
+        <span class="card-kicker">MÉDECIN</span>
+      </div>
+      <h3>Dr {{ m.nom }}</h3>
+      <div class="doctor-detail">
+        <span class="detail-label">Service</span>
+        <span class="detail-value">{{ m.service }}</span>
+      </div>
+      <div class="doctor-detail">
+        <span class="detail-label">Spécialité</span>
+        <span class="specialty-tag">{{ m.specialite }}</span>
+      </div>
+      <div class="card-footer"><span class="tiny-status"></span> Information issue de l’ontologie</div>
+    </article>
+    {% endfor %}
+  </section>
+{% else %}
+  <section class="empty-state">
+    <div class="empty-icon" aria-hidden="true">⌕</div>
+    <h2>Aucun médecin trouvé</h2>
+    <p>Essaie un autre nom, un service ou une spécialité.</p>
+    <a href="{{ url_for('accueil') }}" class="button button-primary">Afficher tous les médecins</a>
+  </section>
+{% endif %}
+
+<section class="info-banner">
+  <div class="info-symbol" aria-hidden="true">i</div>
+  <div><h2>Pourquoi une ontologie ?</h2><p>Les médecins, services et spécialités sont représentés par des individus et des relations dans le graphe RDF. La requête SPARQL permet d’extraire les informations affichées ici.</p></div>
+</section>
+{% endblock %}

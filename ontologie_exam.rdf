@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.example.org/hopital/"
+     xml:base="http://www.example.org/hopital/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:hopital="http://www.example.org/hopital#">
+    <owl:Ontology rdf:about="http://www.example.org/hopital"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.example.org/hopital#aMedecin -->
+
+    <owl:ObjectProperty rdf:about="http://www.example.org/hopital#aMedecin">
+        <rdfs:domain rdf:resource="http://www.example.org/hopital#Consultation"/>
+        <rdfs:range rdf:resource="http://www.example.org/hopital#Medecin"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.example.org/hopital#aPatient -->
+
+    <owl:ObjectProperty rdf:about="http://www.example.org/hopital#aPatient">
+        <rdfs:domain rdf:resource="http://www.example.org/hopital#Consultation"/>
+        <rdfs:range rdf:resource="http://www.example.org/hopital#Patient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.example.org/hopital#aSpecialite -->
+
+    <owl:ObjectProperty rdf:about="http://www.example.org/hopital#aSpecialite">
+        <rdfs:domain rdf:resource="http://www.example.org/hopital#Medecin"/>
+        <rdfs:range rdf:resource="http://www.example.org/hopital#Specialite"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.example.org/hopital#travailleDans -->
+
+    <owl:ObjectProperty rdf:about="http://www.example.org/hopital#travailleDans">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.example.org/hopital#Infirmier"/>
+                    <rdf:Description rdf:about="http://www.example.org/hopital#Medecin"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.example.org/hopital#Service"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.example.org/hopital#dateConsultation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.example.org/hopital#dateConsultation">
+        <rdfs:domain rdf:resource="http://www.example.org/hopital#Consultation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.example.org/hopital#nom -->
+
+    <owl:DatatypeProperty rdf:about="http://www.example.org/hopital#nom">
+        <rdfs:domain rdf:resource="http://www.example.org/hopital#Personne"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.example.org/hopital#Consultation -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Consultation"/>
+    
+
+
+    <!-- http://www.example.org/hopital#Infirmier -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Infirmier">
+        <rdfs:subClassOf rdf:resource="http://www.example.org/hopital#Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.example.org/hopital#Medecin -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Medecin">
+        <rdfs:subClassOf rdf:resource="http://www.example.org/hopital#Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.example.org/hopital#MedecinDeCardiologie -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#MedecinDeCardiologie">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.example.org/hopital#Medecin"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.example.org/hopital#travailleDans"/>
+                        <owl:hasValue rdf:resource="http://www.example.org/hopital#ServiceCardiologie"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.example.org/hopital#Medecin"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.example.org/hopital#Patient -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Patient">
+        <rdfs:subClassOf rdf:resource="http://www.example.org/hopital#Personne"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.example.org/hopital#Personne -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Personne">
+        <owl:disjointWith rdf:resource="http://www.example.org/hopital#Service"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.example.org/hopital#Service -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Service"/>
+    
+
+
+    <!-- http://www.example.org/hopital#Specialite -->
+
+    <owl:Class rdf:about="http://www.example.org/hopital#Specialite"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.example.org/hopital#Cardiologie -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#Cardiologie">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Specialite"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#Consultation1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#Consultation1">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Consultation"/>
+        <hopital:aMedecin rdf:resource="http://www.example.org/hopital#DrMukendi"/>
+        <hopital:aPatient rdf:resource="http://www.example.org/hopital#MarieKasongo"/>
+        <hopital:dateConsultation>2026-10-20</hopital:dateConsultation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#Consultation2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#Consultation2">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Consultation"/>
+        <hopital:aMedecin rdf:resource="http://www.example.org/hopital#DrKabila"/>
+        <hopital:aPatient rdf:resource="http://www.example.org/hopital#JeanMwamba"/>
+        <hopital:dateConsultation>2026-10-21</hopital:dateConsultation>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#DrKabila -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#DrKabila">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Medecin"/>
+        <hopital:aSpecialite rdf:resource="http://www.example.org/hopital#Pediatrie"/>
+        <hopital:travailleDans rdf:resource="http://www.example.org/hopital#ServicePediatrie"/>
+        <hopital:nom>Kabila</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#DrLukusa -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#DrLukusa">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Medecin"/>
+        <hopital:aSpecialite rdf:resource="http://www.example.org/hopital#Cardiologie"/>
+        <hopital:travailleDans rdf:resource="http://www.example.org/hopital#ServiceCardiologie"/>
+        <hopital:nom>Lukusa</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#DrMbala -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#DrMbala">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Medecin"/>
+        <hopital:aSpecialite rdf:resource="http://www.example.org/hopital#Medecine"/>
+        <hopital:travailleDans rdf:resource="http://www.example.org/hopital#ServiceMedecine"/>
+        <hopital:nom>Mbala</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#DrMukendi -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#DrMukendi">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Medecin"/>
+        <hopital:aSpecialite rdf:resource="http://www.example.org/hopital#Cardiologie"/>
+        <hopital:travailleDans rdf:resource="http://www.example.org/hopital#ServiceCardiologie"/>
+        <hopital:nom>Mukendi</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#GraceNsimba -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#GraceNsimba">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Patient"/>
+        <hopital:nom>Nsimba</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#InfirmierKalala -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#InfirmierKalala">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Infirmier"/>
+        <hopital:travailleDans rdf:resource="http://www.example.org/hopital#ServiceCardiologie"/>
+        <hopital:nom>Kalala</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#InfirmiereTshala -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#InfirmiereTshala">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Infirmier"/>
+        <hopital:travailleDans rdf:resource="http://www.example.org/hopital#ServicePediatrie"/>
+        <hopital:nom>Tshala</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#JeanMwamba -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#JeanMwamba">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Patient"/>
+        <hopital:nom>Mwamba</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#MarieKasongo -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#MarieKasongo">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Patient"/>
+        <hopital:nom>Kasongo</hopital:nom>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#Medecine -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#Medecine">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Specialite"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#Pediatrie -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#Pediatrie">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Specialite"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#ServiceCardiologie -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#ServiceCardiologie">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Service"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#ServiceMedecine -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#ServiceMedecine">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Service"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.example.org/hopital#ServicePediatrie -->
+
+    <owl:NamedIndividual rdf:about="http://www.example.org/hopital#ServicePediatrie">
+        <rdf:type rdf:resource="http://www.example.org/hopital#Service"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.example.org/hopital#Consultation"/>
+            <rdf:Description rdf:about="http://www.example.org/hopital#Personne"/>
+            <rdf:Description rdf:about="http://www.example.org/hopital#Service"/>
+            <rdf:Description rdf:about="http://www.example.org/hopital#Specialite"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.example.org/hopital#Personne"/>
+            <rdf:Description rdf:about="http://www.example.org/hopital#Service"/>
+            <rdf:Description rdf:about="http://www.example.org/hopital#Specialite"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

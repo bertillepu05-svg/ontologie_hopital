@@ -1,0 +1,10 @@
+
+
+Fichiers :
+- templates/base.html
+- templates/index.html 
+- templates/consultations.html 
+- static/css/style.css (styles communs + styles consultations)
+- app.py (requête SPARQL enrichie, recherche et filtre par date)
+
+

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b46">
+  <title>{% block title %}Gestion hospitalière{% endblock %} · Hôpital sémantique</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('accueil') }}" aria-label="Accueil Hôpital sémantique">
+        <span class="brand-mark" aria-hidden="true">✚</span>
+        <span class="brand-copy"><strong>Hôpital</strong><small>sémantique</small></span>
+      </a>
+
+      <div class="sidebar-label">ESPACE DE TRAVAIL</div>
+      <nav class="side-nav" aria-label="Navigation principale">
+        <a class="nav-item {% if request.path == '/' %}is-active{% endif %}" href="{{ url_for('accueil') }}">
+          <span class="nav-icon" aria-hidden="true">⌕</span><span>Médecins</span>
+        </a>
+        <a class="nav-item {% if request.path == '/consultations' %}is-active{% endif %}" href="{{ url_for('consultations') }}">
+          <span class="nav-icon" aria-hidden="true">▦</span><span>Consultations</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="ontology-status"><span class="status-dot"></span><span>Ontologie RDF chargée</span></div>
+        <p>Application académique de démonstration.</p>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Gestion hospitalière</span><span class="crumb-separator">/</span><strong>{% block breadcrumb %}Médecins{% endblock %}</strong></div>
+        <span class="demo-pill"><span class="demo-dot"></span>Données de démonstration</span>
+      </header>
+
+      <div class="page-content">
+        {% block content %}{% endblock %}
+        <footer class="page-footer">
+          <span>Projet académique · Ontologie et Web sémantique</span>
+          <span>UNIKIN · M1 Informatique — IA &amp; Data Science</span>
+        </footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
